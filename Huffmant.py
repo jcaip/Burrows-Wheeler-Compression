@@ -89,15 +89,6 @@ class Huffman:
             val.append(huffTree[1].char)
         return val
 
-h = Huffman()
-t = time.clock()
-text = open('20mb_test.txt','rb').read()
-ctext = h.compress(text)
-print("Compression finished. Time: ")
-print(time.clock()-t)
-f = open('encode.enc','wb+')
-ctext[1].tofile(f)
-f.close
 
 
 """t= time.clock()

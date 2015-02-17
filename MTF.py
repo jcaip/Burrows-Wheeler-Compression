@@ -1,8 +1,8 @@
 	
 def make256():
-    arr = b''
+    arr = bytearray()
     for i in range(0, 256):
-        arr += chr(i)
+        arr.append(i) 
     return arr
 
 class moveToFront:
@@ -11,7 +11,10 @@ class moveToFront:
         for c in text:
             index = alphabet.index(c)
             out.append(index)
-            alphabet = alphabet[index] + alphabet[:index] + alphabet[index + 1:]
+            alphabet_temp = bytearray()
+
+            alphabet_temp.append(alphabet[index])
+            alphabet = alphabet_temp+ alphabet[:index] + alphabet[index + 1:]
         return out
     
     def moveToFrontDe(self,out):
@@ -21,11 +24,3 @@ class moveToFront:
             alphabet = alphabet[index] + alphabet[:index] + alphabet[index + 1:]
         return text
     
-    def __init__(self,data ,flag): 
-        if(flag):
-            self.out = self.moveToFrontEn(data)
-        else:
-            self.out = self.moveToFrontDe(data)
-            
-    def output(self):
-        return self.out

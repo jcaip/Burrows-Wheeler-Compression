@@ -2,34 +2,22 @@
 # move to front; Huffman; CSA; and Burrows Wheeler from CSA import CSA
 from time import clock
 from CSA import CSA
-from Huffmant import Huffman
-from MTF import moveToFront 
 import sys
-
 class BWT():
     def encode(self,text):
         c = CSA(text)
+        print(c)
         t=bytearray()
         for i in range(0,len(text)):
             index = c.getIndex(i)
             if index !=0:
                 t.append(text[c.getIndex(i)-1])
             else:
-                i_bytes = bytearray((i).to_bytes(4, byteorder = sys.byteorder))
-                t = i_bytes+t
+                t =bytearray(int.to_bytes(i,sys.byteorder)).append(t)
                 t.append(text[-1])
         return t
-t = clock()
-
+text = open('tests/6kb_test.txt','rb').read()
 b = BWT()
-m = moveToFront()
-h = Huffman()
-
-text = open('tests/20mb_test.txt','rb').read()
-text_BWT = b.encode(text)
-text_MTF = m.moveToFrontEn(text_BWT)
-text_HUF = h.compress(text_MTF)
-
-f = open('output.enc','wb')
-text_HUF.tofile(f)
-f.close()
+t= clock()
+print(b.encode(text))
+print(clock()-t)

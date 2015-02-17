@@ -1,4 +1,3 @@
-import time
 from bitarray import bitarray
 from heapq import heappop,heappush
 from collections import defaultdict, deque
@@ -41,7 +40,6 @@ class Huffman:
                 d[ch]+=1
             pq = []
             vals = d.items()
-            print(vals)
             for i in vals:
                 n = (i[1],Node(None ,None,i[0],bitarray()))
                 heappush(pq,n)
@@ -71,9 +69,8 @@ class Huffman:
         huffman = makeTree(text)
         comp = bitarray()
         for c in text:
-            print(hPF(c,huffman))
             comp.extend(hPF(c,huffman))
-        return (huffman, comp)
+        return comp
 
     def extract(self,tree,ctext):
         #TODO add method for getting tree for extraction function 

@@ -25,10 +25,14 @@ b = BWT()
 m = moveToFront()
 h = Huffman()
 
-text = open('tests/20mb_test.txt','rb').read()
+text = open('tests/6mb_test.txt','rb').read()
+
 text_BWT = b.encode(text)
+print(clock()-t)
 text_MTF = m.moveToFrontEn(text_BWT)
+print(clock()-t)
 text_HUF = h.compress(text_MTF)
+print(clock()-t)
 
 f = open('output.enc','wb')
 text_HUF.tofile(f)

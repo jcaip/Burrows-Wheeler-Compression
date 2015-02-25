@@ -10,12 +10,12 @@ class CSA:
             while text[i] ==text[j]:
                 i =(i+1)%len(text)
                 j = (j+1)%len(text)
-            return (text[i] - text[j])<0
+            return text[i] - text[j]
             
         
         index = range(0, len(text))
         
-        index = sorted(index,key =cmp_to_key(csaComp) )
+        index = sorted(index,key=cmp_to_key(csaComp) )
         return index
 
     def getLen(self):

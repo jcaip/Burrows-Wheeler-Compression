@@ -72,25 +72,8 @@ class Huffman:
             comp.extend(hPF(c,huffman))
         return comp
 
-    def extract(self,ctext):
+    def extract(self,tree,ctext):
         #TODO add method for getting tree for extraction function 
-        def makeTree(text):
-            d = defaultdict(int)
-            for ch in text:
-                d[ch]+=1
-            pq = []
-            vals = d.items()
-            for i in vals:
-                n = (i[1],Node(None ,None,i[0],bitarray()))
-                heappush(pq,n)
-            while len(pq)>1:
-                n1,n2 = heappop(pq), heappop(pq)
-                n1[1].addVal(False)
-                n2[1].addVal(True)
-                n = (n1[0]+n2[0],Node(n1,n2,None,bitarray()))
-                heappush(pq,n)
-            return pq[0]
-        tree = makeTree(ctext)
         val,i = bytearray(),0
         while i <ctext.length():
             huffTree = tree

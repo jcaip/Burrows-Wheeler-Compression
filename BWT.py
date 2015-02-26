@@ -4,7 +4,7 @@ from time import clock
 from CSA import CSA
 from Huffmant import Huffman
 from MTF import moveToFront 
-import sys,os.path
+import sys,os.path,pickle
 from argparse import  ArgumentParser
 
 class BWT():
@@ -40,33 +40,34 @@ class BWT():
             start_index = next[start_index]
         return text
 
-#testing code
-def is_valid_file(parser, arg):
-    if not os.path.exists(arg):
-        parser.error("The file %s does not exist!" % arg)
-    else:
-        return open(arg, 'rb')  # return an open file handle
-
-
-parser = ArgumentParser(description="Burrows-Wheeeler-Compression")
-parser.add_argument("-c", dest="filename", required=True, help="compress",type=lambda x: is_valid_file(parser, x))
-parser.add_argument("-x", dest="filename", required=True, help="extract",type=lambda x: is_valid_file(parser, x))
-args = parser.parse_args()
-
 b = BWT()
 h = Huffman()
 
 def BWT_encode(filename):
+    startTime = clock()
     text = open(filename,'rb').read()
     text = b.encode(text)
     text = moveToFront(text)
     text = h.compress(text)
+    filename+='.enc'
+    f = open(filename,'wb')
+    
+    print('File compressed in ' + clock()-startTime+' seconds.')
     
 def BWT_decode(filename):
-    text = open(filename, 'rb').read()
+    startTime = clock()
+    text = open(filename, 'rb').readlines()
     text = h.extract(text)
     text = moveToFront(text)
     text = b.decode(text)
-    
+    print('File extracted in ' + clock()-startTime+' seconds.')
 
+parser = ArgumentParser(description="Burrows-Wheeeler-Compression")
+parser.add_argument("--compress", help="compress")
+parser.add_argument("--extract",  help="extract")
+args = parser.parse_args()
+if args.compress:
+    BWT_encode(args.compress)
+elif args.extract:
+    BWT_decode(args.extract)
 

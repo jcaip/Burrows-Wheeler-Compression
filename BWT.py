@@ -48,10 +48,13 @@ def BWT_encode(filename):
     text = open(filename,'rb').read()
     text = b.encode(text)
     text = moveToFront(text)
-    text = h.compress(text)
-    filename+='.enc'
-    f = open(filename,'wb')
+    text = h.compress(text)[1]
     
+    ctext_filename = filename+'.enc'
+    htree_filename = filename+'.htree'
+    f = open(ctext_filename,'wb')
+    text.tofile(f)
+    pickle.dump(text[0],htree_filename)
     print('File compressed in ' + clock()-startTime+' seconds.')
     
 def BWT_decode(filename):

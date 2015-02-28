@@ -70,7 +70,7 @@ class Huffman:
         comp = bitarray()
         for c in text:
             comp.extend(hPF(c,huffman))
-        return comp
+        return (huffman,comp)
 
     def extract(self,tree,ctext):
         #TODO add method for getting tree for extraction function 

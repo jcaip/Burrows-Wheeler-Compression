@@ -46,34 +46,10 @@ h = Huffman()
 def BWT_encode(filename):
     startTime = clock()
     text = open(filename, 'rb+').read()
-    text = b.encode(text)
-    text = moveToFront(text)
     text = h.compress(text)
     
-    ctext_filename = filename + '.enc'
-    htree_filename = filename + '.enc.htree'
-    f = open(ctext_filename, 'wb')
-    text[1].tofile(f)
-    f = open(htree_filename, 'wb')
-    pickle.dump(text[0], f)
     print('File compressed in ' + str(clock() - startTime) + ' seconds.')
     
-def BWT_decode(filename):
-    startTime = clock()
-    bytes_text = open(filename, 'rb').read()
-    bit_text = bitarray()
-    bit_text.frombytes(bytes_text)
-    htree = pickle.load(open(filename+'.htree','rb'))
-    text = h.extract(htree,bit_text)
-    text = moveToFront(text)
-    print(text)
-    text = b.decode(text)
-    pt_filename = filename -'.enc'
-    f = open(pt_filename,'wb')
-    f.write(text)
-    f.close
-    print('File extracted in ' + str(clock() - startTime) + ' seconds.')
-
 parser = ArgumentParser(description="Burrows-Wheeeler-Compression")
 parser.add_argument("--compress", help="filename")
 parser.add_argument("--extract", help="filename")
@@ -81,6 +57,5 @@ args = parser.parse_args()
 if args.compress:
     BWT_encode(args.compress)
 elif args.extract:
-    BWT_decode(args.extract)
+    BWT_encode(args.extract)
 
-BWT_decode('tests/6kb_test.txt.enc')
